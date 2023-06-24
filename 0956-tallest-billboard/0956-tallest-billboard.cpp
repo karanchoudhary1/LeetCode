@@ -8,8 +8,8 @@ public:
         }
         if(dp[ind][cs+5001]!=-1) return dp[ind][cs+5001];
         int a=f(ind+1,cs,rods);
-        int b=f(ind+1,cs+rods[ind],rods);
-        int c=rods[ind]+f(ind+1,cs-rods[ind],rods);
+        int b=rods[ind]+f(ind+1,cs+rods[ind],rods);
+        int c=f(ind+1,cs-rods[ind],rods);
         return dp[ind][cs+5001]=max(a,max(b,c)); 
     }
     int tallestBillboard(vector<int>& rods) {
