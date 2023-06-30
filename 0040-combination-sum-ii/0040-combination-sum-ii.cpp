@@ -20,8 +20,9 @@ public:
     }
     vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
             vector<vector<int>> ans;
+        vector<int> x;
         sort(candidates.begin(),candidates.end());
-        f(0,target,{},candidates,ans);
+        f(0,target,x,candidates,ans);
         return ans;
     }
 };
