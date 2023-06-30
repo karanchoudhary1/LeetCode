@@ -1,28 +1,37 @@
 class Solution {
-public:
-    void f(int i,int tar,vector<int> v,vector<int>& nums,vector<vector<int>>& ans){
-        if(tar<=0){
-            if(tar==0) ans.push_back(v);
+public: 
+    void f(int index,vector<int>&ds,int target,vector<int> &candidates,vector<vector<int>> &ans){
+       if(target<=0){
+           if(target==0)
+           {
+               ans.push_back(ds);
+           }
             return;
-        }
-        if(i==nums.size()) return;
-        v.push_back(nums[i]);
-        f(i+1,tar-nums[i],v,nums,ans);
-        v.pop_back();
-       int j;
+ }
+        if(index==candidates.size()){
+            return;
+}
+       
+        ds.push_back(candidates[index]);
+        f(index+1,ds,target-candidates[index],candidates,ans);
+        ds.pop_back();
         
-        for(j=i+1; j<nums.size(); j++)
+        int j;
+        
+        for(j=index+1; j<candidates.size(); j++)
         {
-            if(nums[j]!=nums[i])
+            if(candidates[j]!=candidates[index])
                 break;
         }
-        f(j,tar,v,nums,ans);
+        
+        f(j,ds,target,candidates,ans);
     }
     vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
-            vector<vector<int>> ans;
-        vector<int> x;
         sort(candidates.begin(),candidates.end());
-        f(0,target,x,candidates,ans);
+        vector<vector<int>>ans;
+        vector<int> ds;
+        
+        f(0,ds,target,candidates,ans);
         return ans;
     }
 };
