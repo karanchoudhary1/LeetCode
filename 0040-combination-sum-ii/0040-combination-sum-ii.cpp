@@ -9,8 +9,14 @@ public:
         v.push_back(nums[i]);
         f(i+1,tar-nums[i],v,nums,ans);
         v.pop_back();
-        while(i<nums.size()-1 && nums[i]==nums[i+1]) i++;
-        f(i+1,tar,v,nums,ans);
+       int j;
+        
+        for(j=i+1; j<nums.size(); j++)
+        {
+            if(nums[j]!=nums[i])
+                break;
+        }
+        f(j,tar,v,nums,ans);
     }
     vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
             vector<vector<int>> ans;
