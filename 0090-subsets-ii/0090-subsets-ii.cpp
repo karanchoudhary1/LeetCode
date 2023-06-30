@@ -9,16 +9,8 @@ public:
         v.push_back(nums[i]);
         f(i+1,nums,v);
         v.pop_back();
-        for(int ind=i;ind<nums.size();ind++){
-            if(ind==nums.size()-1){
-                f(ind+1,nums,v);
-            }
-            else if(nums[ind]==nums[ind+1]) continue;
-            else {
-                f(ind+1,nums,v);
-                break;
-            }
-        }
+        while(i<nums.size()-1 && nums[i]==nums[i+1]) i++;
+        f(i+1,nums,v);
     }
     vector<vector<int>> subsetsWithDup(vector<int>& nums) {
         sort(nums.begin(),nums.end());
