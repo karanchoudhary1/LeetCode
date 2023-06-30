@@ -29,8 +29,9 @@ public:
            vector<vector<int>>vis(row,vector<int>(col,0));
            bool ans=false;
            for(int i=0;i<col;i++){
-               if(vis[0][i]==0 && v[0][i]==0){
+               if(v[0][i]==0){
                    ans |= dfs(vis,v,0,i);
+                   if(ans==1) break;
                }
            }
            if(ans){
