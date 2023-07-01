@@ -1,35 +1,30 @@
 class Solution {
 public:
-    int dp[1<<14][20];
-    int find(vector<int>&tasks,int vis,int timeSpent,int time)
-    {
-        if(__builtin_popcount(vis) == tasks.size()) return 0;
-        if(dp[vis][timeSpent]!=-1) return dp[vis][timeSpent];
-        int a = 1e9;
-        for(int i=0;i<tasks.size();++i)
-        {
-            if(((1<<i)&vis) == 0)
-            {
-                if(timeSpent-tasks[i]>=0)
-                {
-                    int temp = vis;
-                    vis|=1<<i;
-                    a=min(a,find(tasks,vis,timeSpent-tasks[i],time));
-                    vis=temp;
-                }
-                
-                    int temp = vis;
-                    vis|=1<<i;
-                    a=min(a,1+find(tasks,vis,time-tasks[i],time));
-                    vis=temp;
-            }
+    int x;
+    //int dp[]
+        int dp[1<<14][20];
+
+    int f(int mask,int cs,int tot,vector<int>& v){
+        if(mask==x) {
+            return 0;
         }
-         return dp[vis][timeSpent]=a;
-        
-        
+        if(dp[mask][cs]!=-1) return dp[mask][cs];
+        int ans=1e9;
+        for(int i=0;i<v.size();i++){
+            if(mask==x) return 0;
+            if(mask&1<<i) continue;
+            int a=1e9;
+            int b=1e9;
+            if(cs+v[i]<=tot) a=f(mask|1<<i,cs+v[i],tot,v);
+             b=f(mask|1<<i,v[i],tot,v)+1;
+            ans=min(a,min(ans,b));
+        }
+        return dp[mask][cs]=ans;
     }
-    int minSessions(vector<int>& tasks, int time) {
-        memset(dp,-1,sizeof(dp));
-        return 1+find(tasks,0,time,time);
+    int minSessions(vector<int>& tasks, int sessionTime) {
+        x=pow(2,tasks.size())-1;
+                memset(dp,-1,sizeof(dp));
+
+    return f(0,0,sessionTime,tasks)+1;
     }
 };
