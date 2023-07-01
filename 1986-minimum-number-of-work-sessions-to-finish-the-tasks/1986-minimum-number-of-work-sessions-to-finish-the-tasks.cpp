@@ -10,7 +10,7 @@ public:
         int b=1e9;
         int c=1e9;
         if(!(mask&(1<<ind))){
-            if(cs+v[ind]<=tot) b=f(ind+1,mask|1<<ind,cs+v[ind],tot,v);
+            if(cs+v[ind]<=tot) b=f(0,mask|1<<ind,cs+v[ind],tot,v);
              c=f(0,mask|1<<ind,v[ind],tot,v)+1;
         }
         return dp[mask][cs]=min(a,min(b,c));
