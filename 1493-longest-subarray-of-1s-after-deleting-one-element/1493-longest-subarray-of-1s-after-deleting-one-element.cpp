@@ -8,8 +8,7 @@ public:
         for(int i=0;i<nums.size();i++){
             if(nums[i]==1) continue;
             else{
-                if(prev1==-1 && prev2==-1) ans=max(ans,i);
-                else ans=max(ans,i-prev2-2);
+                 ans=max(ans,i-prev2-2);
                 prev2=prev1;
                 prev1=i;   
             }
