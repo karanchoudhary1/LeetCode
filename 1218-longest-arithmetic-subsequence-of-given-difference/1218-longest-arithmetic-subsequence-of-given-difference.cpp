@@ -1,7 +1,7 @@
 class Solution {
 public:
     int longestSubsequence(vector<int>& arr, int diff) {
-        map<int,int> m;
+        unordered_map<int,int> m;
         int ans=0;
         //sort(arr.begin(),arr.end());
         for(int i=0;i<arr.size();i++){
