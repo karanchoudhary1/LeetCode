@@ -1,34 +1,27 @@
 class Solution {
 public:
-    int dp[21][21][2];
-    int f(int i,int j,int cho,vector<int>& v){
-        if(i==j){
-            if(cho==0) return v[i];
-            return 0;
-        }
-        int ans;
-        //if(dp[i][j][cho]!=-1) return dp[i][j][cho];
+    int dp[20][20][2];
+    int f(int st,int end,int cho,vector<int>& nums){
+        if(st==end) return nums[st];
         if(cho==0){
-             ans=0;
-            int d=f(i+1,j,1,v)+v[i];
-            int e=f(i,j-1,1,v)+v[j];
-            ans=max(ans,max(d,e));
+            int a=f(st+1,end,1,nums)+nums[st];
+            int b=f(st,end-1,1,nums)+nums[end];
+            return max(a,b);
         }
         else{
-             ans=1e9;
-            int a=f(i+1,j,0,v);
-            int b=f(i,j-1,0,v);
-            ans=min(ans,min(a,b));
+             int a=f(st+1,end,0,nums);
+            int b=f(st,end-1,0,nums);
+            return min(a,b);
         }
-        return ans;
+        return 0;
     }
     bool PredictTheWinner(vector<int>& nums) {
-        memset(dp,-1,sizeof(dp));
-        int x= f(0,nums.size()-1,0,nums);
-        x*=2;
+        int x=f(0,nums.size()-1,0,nums);
         int sum=0;
         for(int i=0;i<nums.size();i++) sum+=nums[i];
-        if(x>=sum) return 1;
-         return 0;
+        int d=sum/2;
+        if(sum%2==1) d++;
+        if(x>=d) return 1;
+        return 0;
     }
 };
