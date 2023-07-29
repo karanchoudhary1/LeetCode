@@ -14,7 +14,7 @@ public:
     }
     double soupServings(int n) {
         if(n>4800) return 1.0;
-        vector<vector<double>> dp(n+1,vector<double>(n+1,-1.0));
+        vector<vector<double>> dp(4801,vector<double>(4801,-1.0));
         return f(n,n,dp);
     }
 };
