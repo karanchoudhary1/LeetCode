@@ -14,12 +14,7 @@ class Solution {
         queue<pair<int,pair<int,int>>> pq;
         int dx1[4]={0,0,1,-1};
         int dx2[4]={1,-1,0,0};
-        vector<vector<int>> dis;
-        for(int i=0;i<N;i++){
-            vector<int> di;
-            for(int j=0;j<M;j++) di.push_back(1e5);
-            dis.push_back(di);
-        }
+        vector<vector<int>> dis(N,vector<int>(M,1e9));
         pq.push({0,{0,0}});
         dis[0][0]=0;
         while(pq.size()!=0){
