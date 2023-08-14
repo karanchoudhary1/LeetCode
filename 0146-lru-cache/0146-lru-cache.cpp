@@ -1,33 +1,49 @@
 class LRUCache {
 public:
-    vector<int> v;
+    
     queue<int> q;
-    map<int,int> m;
-    int siz=0;
+    int siz;
+    map<int,pair<int,int>> m;
     LRUCache(int capacity) {
         siz=capacity;
-        for(int i=0;i<=100001;i++) v.push_back(-1);
     }
     
     int get(int key) {
-        if(v[key]!=-1) {
-            q.push(key);
-            m[key]++; 
+        if(m.find(key)!=m.end() && m[key].second!=-1){
+        q.push(key);
+        auto it=m[key];
+        m[key]={it.first+1,it.second};
+        return m[key].second;
         }
-        return v[key];
+        //else m[key]={1,-1};
+        return -1;
     }
     
     void put(int key, int value) {
-        m[key]++;
         q.push(key);
-        while(m.size()>siz){
-            m[q.front()]--;
-            if(m[q.front()]==0){
-                m.erase(q.front());
-                v[q.front()]=-1;
-            }
-            q.pop();
+        if(m.find(key)!=m.end()){
+        auto it=m[key];
+        m[key]={it.first+1,value};
         }
-        v[key]=value;
+        else m[key]={1,value};
+        while(m.size()>siz){
+            auto it=m[q.front()];
+            if(it.first==1) {
+                m.erase(q.front());
+                q.pop();
+            }
+            else{
+                m[q.front()]={it.first-1,it.second};
+                q.pop();
+            }
+        }
+        return;
     }
 };
+
+/**
+ * Your LRUCache object will be instantiated and called as such:
+ * LRUCache* obj = new LRUCache(capacity);
+ * int param_1 = obj->get(key);
+ * obj->put(key,value);
+ */
