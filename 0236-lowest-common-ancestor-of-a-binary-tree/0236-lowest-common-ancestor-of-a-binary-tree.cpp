@@ -10,13 +10,12 @@
 class Solution {
 public:
     TreeNode* f(TreeNode* root,TreeNode* p,TreeNode* q){
+        if(root==NULL) return NULL;
         TreeNode* a=NULL;
         TreeNode* b=NULL;
         if(root==p) return p;
         if(root==q) return q;
-        if(root->left!=NULL)
         a=f(root->left,p,q);
-        if(root->right!=NULL)
         b=f(root->right,p,q);
         if(a==NULL && b==NULL) return NULL;
         if(a!=NULL && b!=NULL) return root;
