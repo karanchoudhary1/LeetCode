@@ -11,12 +11,16 @@
  */
 class Solution {
 public:
-    bool f(long long int mini,long long int maxi,TreeNode* root){
+    long long int prev=LONG_MIN;
+    bool f(TreeNode* root){
         if(root==NULL) return 1;
-        if(root->val<=mini || root->val>=maxi) return 0;
-        return f(mini,root->val,root->left) && f(root->val,maxi,root->right);
+        bool a=f(root->left);
+        if(a==0) return 0;
+        if(root->val<=prev) return 0;
+        prev=root->val;
+        return a && f(root->right);
     }
     bool isValidBST(TreeNode* root) {
-        return f(-1e15,1e15,root);
+        return f(root);
     }
 };
