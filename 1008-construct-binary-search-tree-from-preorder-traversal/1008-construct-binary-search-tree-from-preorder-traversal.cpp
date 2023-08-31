@@ -16,11 +16,11 @@ public:
        if(i>=nums.size()) return NULL;
         if(nums[i]<=mini || nums[i]>=maxi) return NULL;
         TreeNode* curr=new TreeNode(nums[i]);
-        int d=nums[i];
+        //int d=nums[i];
         i++;
-        curr->left=f(mini,d,nums);
+        curr->left=f(mini,nums[i-1],nums);
         //i++;
-        curr->right=f(d,maxi,nums);
+        curr->right=f(nums[i-1],maxi,nums);
         return curr;
     }
     TreeNode* bstFromPreorder(vector<int>& nums) {
