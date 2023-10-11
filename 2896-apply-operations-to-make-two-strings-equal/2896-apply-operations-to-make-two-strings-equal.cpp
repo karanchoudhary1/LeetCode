@@ -1,38 +1,33 @@
-
-    class Solution {
+class Solution {
 public:
-    vector<vector<int>>dp; // craete DP
-    int memo(int i, int x,string &s1, string &s2, int xInUse){
-        if(i >= s1.size()) return 0; // base case
-        if(dp[i][xInUse] != -1) return dp[i][xInUse];
-        if(s1[i] != s2[i]){ 
-            s1[i] = (1 - (s1[i] - '0')) + '0'; // flip S1[i]
-            s1[i+1] = (1 - (s1[i+1] - '0')) + '0'; // flip S1[i+1]
-            int pick = 1 + memo(i+1,x,s1,s2,xInUse);
-            s1[i] = (1 - (s1[i] - '0')) + '0'; // undo flip
-            s1[i+1] = (1 - (s1[i+1] - '0')) + '0'; // undo flip
-            int nonPick = INT_MAX;
-            if(xInUse){
-                // if x in use, no need to wase x money
-                nonPick = memo(i+1,x,s1,s2,0); 
-            }else{
-                // if x not in use, use x amount
-                nonPick = x+memo(i+1,x,s1,s2,1);
-            }
-            // cout<<pick<<" "<<nonPick<<"\n";
-            return dp[i][xInUse] = min(pick,nonPick); //return minimum
+    int dp[501][2];
+    int f(int i,int j,bool f1,string& s1,string& s2,int x){
+         if(i==s1.length()-1){
+             if(f1==1){
+                 if(s1[i]==s2[j]) return 1e6;
+                 return 0;
+             }
+             if(s1[i]==s2[j]) return 0;
+             return 1e6;
+         }
+        if(dp[i][f1]!=-1) return dp[i][f1];
+         if(s1[i]==s2[j]) return dp[i][f1]=f(i+1,j+1,f1,s1,s2,x); 
+         if(s1[i+1]=='0') s1[i+1]='1';
+        else s1[i+1]='0';
+        int a=1+f(i+1,j+1,f1,s1,s2,x);
+         if(s1[i+1]=='0') s1[i+1]='1';
+        else s1[i+1]='0';
+        int b;
+        if(f1==0){
+            b=x+f(i+1,j+1,1,s1,s2,x);
         }
-        //directly move ahead since s1[i] == s2[i]
-        return dp[i][xInUse] = memo(i+1,x,s1,s2,xInUse);
-        
+        else b=f(i+1,j+1,0,s1,s2,x);
+        return min(a,b);
     }
     int minOperations(string s1, string s2, int x) {
-        int cnt = 0;
-        dp.resize(s1.size()+1,vector<int>(2,-1));
-        for(int i = 0; i < s1.size(); ++i){
-            if(s1[i] != s2[i]) cnt++;
-        }
-        if(cnt% 2 == 1) return -1;
-        return memo(0,x,s1,s2,0);
+        memset(dp,-1,sizeof(dp));
+        int ans= f(0,0,0,s1,s2,x);
+        if(ans>=1e6) return -1;
+        return ans;
     }
 };
